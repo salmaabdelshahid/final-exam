@@ -22,7 +22,8 @@ export const dynamic = 'force-dynamic';
 
 export default async function ProductDetails({params}:{params: Params}) {
     const {productId}= await params
-              const token = await getToken()
+    const token = await getToken()
+    console.log(token);
     
     const response = await fetch("https://ecommerce.routemisr.com/api/v1/products/"+productId)
     const {data}:{data:productI} = await response.json()

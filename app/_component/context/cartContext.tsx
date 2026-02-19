@@ -26,7 +26,7 @@ export default function CartContextProvider({children, userToken}:{children : Re
     const [isLoading, setIsLoading] = useState(false)
     const session = useSession()
     async function getCart(){
-        if(session.status=="authenticated"){
+        
            try {
             
             setIsLoading(true);
@@ -46,7 +46,7 @@ export default function CartContextProvider({children, userToken}:{children : Re
         finally{
             setIsLoading(false);
         }     
-        }
+        
     }
     useEffect(()=>{
         getCart()
