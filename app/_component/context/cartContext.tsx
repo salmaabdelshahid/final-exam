@@ -55,7 +55,7 @@ export default function CartContextProvider({children, userToken}:{children : Re
     if (userToken) {
         getCart();
     }
-}, [userToken]);
+}, []);
 
 
     return <>
