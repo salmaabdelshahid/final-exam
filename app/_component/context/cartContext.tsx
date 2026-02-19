@@ -26,7 +26,10 @@ export default function CartContextProvider({children, userToken}:{children : Re
     const [isLoading, setIsLoading] = useState(false)
     const session = useSession()
     async function getCart(){
-        
+        if (!userToken) {
+        console.log("No token found, skipping fetch");
+        return; 
+    }
            try {
             
             setIsLoading(true);
@@ -48,9 +51,11 @@ export default function CartContextProvider({children, userToken}:{children : Re
         }     
         
     }
-    useEffect(()=>{
-        getCart()
-    },[])
+   useEffect(() => {
+    if (userToken) {
+        getCart();
+    }
+}, [userToken]);
 
 
     return <>
