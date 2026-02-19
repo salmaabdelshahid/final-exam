@@ -51,7 +51,7 @@ export default async function ProductDetails({params}:{params: Params}) {
     <span className='font-semibold'>EGP {data.price}.00</span>
   </CardContent>
   <CardFooter>
-    <AddToCart productId={data._id}  secret={token!}/>
+    <AddToCart productId={data._id}  token={token!}/>
     <HeartIcon></HeartIcon>
   </CardFooter>
   </div>

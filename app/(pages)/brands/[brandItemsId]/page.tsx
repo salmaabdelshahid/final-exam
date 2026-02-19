@@ -1,5 +1,6 @@
 import AddToCart from '@/app/_component/addToCart/AddToCart';
 import MyStarIcon from '@/app/_component/star-icon/page';
+import { getToken } from '@/app/Helpers/getUserToken';
 import { Card, CardHeader, CardDescription, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { productI } from '@/interface';
 import { Link, HeartIcon } from 'lucide-react';
@@ -9,7 +10,7 @@ import React from 'react'
 
 export default async function BrandItems({params}:{params:Params}) {
     const { brandItemsId } = await params; 
-    
+    const token = await getToken()
     const response = await fetch(`https://ecommerce.routemisr.com/api/v1/products?brand=${brandItemsId}`)
     const {data:products}:{data:productI[]} = await response.json()
     
@@ -53,7 +54,7 @@ export default async function BrandItems({params}:{params:Params}) {
   </CardContent>
      
   <CardFooter>
-    <AddToCart productId={product._id} secret={''}/>
+    <AddToCart productId={product._id} token={token!}/>
     <HeartIcon></HeartIcon>
   </CardFooter>
 </Card>

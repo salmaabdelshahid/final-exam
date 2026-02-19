@@ -16,11 +16,13 @@ import { HeartIcon } from 'lucide-react';
 import Link from 'next/link';
 import AddToCart from '@/app/_component/addToCart/AddToCart';
 import { getToken } from '@/app/Helpers/getUserToken';
+import { log } from 'console';
 export const dynamic = 'force-dynamic';
 export default async function Products() {
           const token = await getToken()
   const response =  await fetch("https://ecommerce.routemisr.com/api/v1/products")
   let {data:products}:{data:productI[]} = await response.json()
+  
   
   
   return <>
@@ -55,7 +57,7 @@ export default async function Products() {
   </CardContent>
      </Link>
   <CardFooter>
-    <AddToCart secret={token!} productId={product._id}/>
+    <AddToCart token={token!} productId={product._id}/>
     <HeartIcon></HeartIcon>
   </CardFooter>
 </Card>

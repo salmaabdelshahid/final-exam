@@ -1,21 +1,18 @@
 import { cookies } from 'next/headers'
 import { decode } from 'next-auth/jwt';
 
-export async function getToken() {
+export async function getToken(){
+    // شرط الأمان لمنع إيرور الـ Request Scope
     try {
-        const cookieStore = await cookies();
-        const sessionToken = cookieStore.get("next-auth.session-token")?.value;
-
-        if (!sessionToken) return null;
-
-        const decoded = await decode({
-            token: sessionToken,
-            secret: process.env.NEXTAUTH_SECRET!
-        });
+        const getToken = (await cookies()).get("next-auth.session-token")?.value || (await cookies()).get("__Secure-next-auth.session-token")?.value
         
-        return decoded?.token || null;
+        if (!getToken) return null; // لو مفيش توكن اصلاً اخرج بسلام
+
+        const accessToken = await decode({token:getToken, secret:process.env.NEXTAUTH_SECRET!})
+        
+        return accessToken?.token
     } catch (error) {
-        console.error("Error decoding token:", error);
+        // لو حصلت مشكلة في الـ scope هيرجع null بدل ما يوقع الموقع بشاشة سودة
         return null;
     }
 }

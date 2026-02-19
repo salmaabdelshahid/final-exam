@@ -6,21 +6,23 @@ import { toast } from "sonner"
 import { CartContext } from '../context/cartContext'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { log } from 'console'
 
-export default function AddToCart({productId, secret}:{productId:string , secret :string}) {
+export default function AddToCart({productId, token}:{productId:string , token :string}) {
 
     const [loading, isLoading]=useState(false);
     const {cartData, setCartData}=useContext(CartContext);
     const session = useSession()
     const router = useRouter()
     async function addProduct(){
+      
         if(session.status=="authenticated"){
             isLoading(true);
         const response = await fetch("https://ecommerce.routemisr.com/api/v1/cart",{
             method : "POST",
             headers: {
     "Content-Type": "application/json",
-    token : secret
+    token : token
   },
   body : JSON.stringify({productId})
         })
